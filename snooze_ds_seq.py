@@ -3,6 +3,8 @@ import pandas as pd
 from torch.utils.data import Dataset
 import datetime
 
+dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 class SnoozeDataset(Dataset):
   FEATURES = [
     'DayOfWeek',
@@ -18,7 +20,7 @@ class SnoozeDataset(Dataset):
     return len(self.df)
   
   def __getitem__(self, idx):
-    y = torch.Tensor([self.df.iloc[idx][SnoozeDataset.TARGET]])
-    x = torch.Tensor(self.df.iloc[idx][SnoozeDataset.FEATURES].values.reshape(15, 2).tolist())
+    y = torch.Tensor([self.df.iloc[idx][SnoozeDataset.TARGET]], device=dev)
+    x = torch.Tensor(self.df.iloc[idx][SnoozeDataset.FEATURES].values.reshape(15, 2).tolist(), device=dev)
     return x, y
   
