@@ -5,9 +5,11 @@ class ResBlock(torch.nn.Module):
   def __init__(self, input_size, hidden_size):
     super().__init__()
     self.t_norm1 = torch.nn.LayerNorm( (input_size[-2], input_size[-1]))
+    # self.t_norm1 = torch.nn.BatchNorm1d( input_size[-2])
     self.t_linear1 = torch.nn.Linear( input_size[-2], input_size[-2] )
 
     self.f_norm1 = torch.nn.LayerNorm( (input_size[-2], input_size[-1]))
+    # self.f_norm1 = torch.nn.BatchNorm1d( input_size[-2])
     self.f_linear1 = torch.nn.Linear(input_size[-1], hidden_size)
     self.f_linear2 = torch.nn.Linear(hidden_size, input_size[-1])
 
